@@ -24,21 +24,20 @@ In your layout (haml assumed):
   %body
     %h1= page_title("Default page title")
 
-In your view (haml assumed):
+In your view:
 
   - set_meta_description(h(@item.description))
   - set_meta_keywords(h(@item.tags.join(",")))
   - set_head_title([h(@item.title), "Showing item"])
   - set_page_title(h(@item.title))
 
-
 == INSTALL:
 
-* sudo gem install site_meta
+* sudo gem install bragi-site_meta
 * Add following line to your config/environment.rb
-  Rails::Initializer.run do |config| 
-    config.gem 'site_meta'
-  end
+    Rails::Initializer.run do |config| 
+      config.gem 'bragi-site_meta'
+    end
 
 == LICENSE:
 
