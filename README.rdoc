@@ -1,0 +1,66 @@
+= site_meta
+
+* site_meta.github.com
+
+== DESCRIPTION:
+
+Provides helpers for easy adding of html meta information to Rails applications.
+
+== FEATURES/PROBLEMS:
+
+* Easily add default description and keywords meta tags.
+* Customize meta tags on per-view basis
+* Add head title tag with breadcrubms
+* Add page title
+
+== SYNOPSIS:
+
+In your layout (haml assumed):
+
+  %head
+    = meta_description("Default meta description")
+    = meta_keywords("some, default, keywords")
+    = head_title("Site name")
+  %body
+    %h1= page_title("Default page title")
+
+In your view (haml assumed):
+
+  - set_meta_description(h(@item.description))
+  - set_meta_keywords(h(@item.tags.join(",")))
+  - set_head_title([h(@item.title), "Showing item"])
+  - set_page_title(h(@item.title))
+
+
+== INSTALL:
+
+* sudo gem install site_meta
+* Add following line to your config/environment.rb
+  Rails::Initializer.run do |config| 
+    config.gem 'site_meta'
+  end
+
+== LICENSE:
+
+(The MIT License)
+
+Copyright (c) 2009 Łukasz Piestrzeniewicz
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
