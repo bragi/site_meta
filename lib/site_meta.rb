@@ -1,5 +1,10 @@
 module SiteMeta
   VERSION = '0.1'
+
+  def meta_content_type(type=:utf)
+    type = "utf-8" if type == :utf
+    meta_tag("Content-Type", "text/html;charset=#{type}", "http-equiv")
+  end
   
   def head_title(default_title, separator=" - ")
     title = [@head_title, default_title].flatten.compact.join(separator)
@@ -33,8 +38,8 @@ module SiteMeta
     end
   end
   
-  def meta_tag(name, content)
-    "<meta name=\"#{name}\" content=\"#{content}\" />"
+  def meta_tag(name, content, key='name')
+    "<meta #{key}=\"#{name}\" content=\"#{content}\" />"
   end
   
   def title_tag(content)
