@@ -1,2 +1,5 @@
+== 0.2
+ * Added documentation
+ * meta_keywords now allows multiple arguments, strips spaces
 == 0.1
 First public release of helpers

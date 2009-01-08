@@ -55,8 +55,26 @@ describe SiteMeta do
       @helper.meta_keywords("default,keywords").should == @helper.meta_tag(:keywords, "default,keywords")
     end
     
+    it "should use default when provided as array" do
+      @helper.meta_keywords(["default", "keywords"]).should == @helper.meta_tag(:keywords, "default,keywords")
+    end
+
+    it "should strip keywords" do
+      @helper.meta_keywords("default , keywords").should == @helper.meta_tag(:keywords, "default,keywords")
+    end
+
     it "should merge provided keywords by default" do
       @helper.set_meta_keywords("non,default")
+      @helper.meta_keywords("default,keywords").should == @helper.meta_tag(:keywords, "non,default,keywords")
+    end
+
+    it "should set keywords as array" do
+      @helper.set_meta_keywords(["non", "default"])
+      @helper.meta_keywords("default,keywords").should == @helper.meta_tag(:keywords, "non,default,keywords")
+    end
+
+    it "should strip set keywords" do
+      @helper.set_meta_keywords(["non ", " default"])
       @helper.meta_keywords("default,keywords").should == @helper.meta_tag(:keywords, "non,default,keywords")
     end
 
@@ -97,6 +115,11 @@ describe SiteMeta do
       @helper.head_title("Site name").should == @helper.title_tag("Item title - View title - Site name")
     end
 
+    it "should accept multiple entries as title without array" do
+      @helper.set_head_title("Item title", "View title")
+      @helper.head_title("Site name").should == @helper.title_tag("Item title - View title - Site name")
+    end
+
     it "should use custom separator" do
       @helper.set_head_title("Page title")
       @helper.head_title("Site name", " &raquo; ").should == @helper.title_tag("Page title &raquo; Site name")
@@ -119,6 +142,12 @@ describe SiteMeta do
     
     it "should accept array title" do
       @helper.set_head_and_page_title(["Item title", "View title"])
+      @helper.page_title.should == "Item title"
+      @helper.head_title("Site name").should == @helper.title_tag("Item title - View title - Site name")
+    end
+    
+    it "should accept multiple elements title" do
+      @helper.set_head_and_page_title("Item title", "View title")
       @helper.page_title.should == "Item title"
       @helper.head_title("Site name").should == @helper.title_tag("Item title - View title - Site name")
     end
