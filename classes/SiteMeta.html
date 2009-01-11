@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: SiteMeta</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">SiteMeta</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/site_meta_rb.html">
+                lib/site_meta.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Provides helpers for easily adding metadata to your views and layouts.
+</p>
+<p>
+In your layout use helpers <tt><a
+href="SiteMeta.html#M000002">head_title</a></tt>, <tt><a
+href="SiteMeta.html#M000003">meta_description</a></tt>, <tt><a
+href="SiteMeta.html#M000004">meta_keywords</a></tt> with optional defaults.
+In each view you can override the defaults using helpers <tt><a
+href="SiteMeta.html#M000006">set_head_title</a></tt>, <tt><a
+href="SiteMeta.html#M000009">set_meta_description</a></tt>, <tt><a
+href="SiteMeta.html#M000010">set_meta_keywords</a></tt>.
+</p>
+<h2>Providing description meta</h2>
+<p>
+In your layout use <tt><a
+href="SiteMeta.html#M000003">meta_description</a></tt> in head section of
+HTML with optional default description:
+</p>
+<pre>
+  %head
+    = meta_description(&quot;Site_meta is the easiest way to provide metadata in your Rails application&quot;)
+</pre>
+<p>
+In each view you can override default setting using <tt><a
+href="SiteMeta.html#M000009">set_meta_description</a></tt>. In view
+app/views/pages/show.html.haml
+</p>
+<pre>
+  - set_meta_description(h(@page.description))
+</pre>
+<h2>Providing keywords meta</h2>
+<p>
+In your layout use <tt><a
+href="SiteMeta.html#M000004">meta_keywords</a></tt> in head section of HTML
+with optional list of default keywords:
+</p>
+<pre>
+  %head
+    = meta_keywords(&quot;rails,gem,plugin,ruby,meta,metadata,html&quot;)
+</pre>
+<p>
+In each view you can override or add keywords using <tt><a
+href="SiteMeta.html#M000010">set_meta_keywords</a></tt>. In view
+app/views/pages/show.html.haml
+</p>
+<pre>
+  - set_meta_keywords(h(@page.tags.join(&quot;,&quot;)))
+</pre>
+<p>
+which will add keywords to the default set or
+</p>
+<pre>
+  - set_meta_keywords(&quot;pricing,information&quot;, :replace)
+</pre>
+<p>
+to replace the whole list.
+</p>
+<h2>Providing title</h2>
+<p>
+In your layout use <tt><a href="SiteMeta.html#M000002">head_title</a></tt>
+in head section and provide last element of breadcrumb trail (usually site
+name)
+</p>
+<pre>
+  %head
+    = head_title(&quot;Site_meta&quot;)
+</pre>
+<p>
+In each view you provide title using <tt><a
+href="SiteMeta.html#M000006">set_head_title</a></tt>, where you can provide
+more elements of breadcrumbs. In view app/views/pages/show.html.haml
+</p>
+<pre>
+  - set_head_title(h(@page.title))
+</pre>
+<p>
+or in app/views/pages/edit.html.haml
+</p>
+<pre>
+  - set_head_title(&quot;Editing #{h(@page.title)}&quot;, &quot;Pages&quot;)
+</pre>
+<p>
+This will result in title set to:
+</p>
+<pre>
+  &quot;Page title - Site_meta&quot;
+</pre>
+<p>
+in first case and:
+</p>
+<pre>
+  &quot;Editing Page title - Pages - Site_meta&quot;
+</pre>
+<p>
+in second case
+</p>
+<h2>Providing title in HTML</h2>
+<p>
+Title that is presented in the body part of HTML doesn&#8216;t need the
+breadcrumbs and may differ from the title presented in HTML head part. Use
+<tt><a href="SiteMeta.html#M000005">page_title</a></tt> helper in your
+layout:
+</p>
+<pre>
+  %body
+    %h1= page_title
+</pre>
+<p>
+In each view set the page title using <tt><a
+href="SiteMeta.html#M000008">set_page_title</a></tt> helper. In view
+app/views/pages/show.html.haml:
+</p>
+<pre>
+  - set_page_title(h(@page.title))
+</pre>
+<h2>Providing head and page title at the same time</h2>
+<p>
+In most situations (like in case of show.html.haml mentioned above) you
+want to have the same title used as a page title and as a beginning of the
+breadcrumb trail. In that case use <tt><a
+href="SiteMeta.html#M000007">set_head_and_page_title</a></tt> helper. In
+view app/views/pages/show.html.haml
+</p>
+<pre>
+  - set_head_and_page_title(h(@page.title), &quot;Pages&quot;)
+</pre>
+<p>
+This will set page title to first element and set proper trail in head.
+</p>
+<h2>Providing encoding</h2>
+<p>
+To provide encoding information use <tt><a
+href="SiteMeta.html#M000001">meta_content_type</a></tt> in your layout use
+</p>
+<pre>
+  %head
+    = meta_content_type
+</pre>
+<p>
+This will provide utf-8 charset by default.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000002">head_title</a>&nbsp;&nbsp;
+      <a href="#M000001">meta_content_type</a>&nbsp;&nbsp;
+      <a href="#M000003">meta_description</a>&nbsp;&nbsp;
+      <a href="#M000004">meta_keywords</a>&nbsp;&nbsp;
+      <a href="#M000005">page_title</a>&nbsp;&nbsp;
+      <a href="#M000007">set_head_and_page_title</a>&nbsp;&nbsp;
+      <a href="#M000006">set_head_title</a>&nbsp;&nbsp;
+      <a href="#M000009">set_meta_description</a>&nbsp;&nbsp;
+      <a href="#M000010">set_meta_keywords</a>&nbsp;&nbsp;
+      <a href="#M000008">set_page_title</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">VERSION</td>
+          <td>=</td>
+          <td class="context-item-value">'0.2.0'</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
+
+        <div class="method-heading">
+          <a href="SiteMeta.src/M000002.html" target="Code" class="method-signature"
+            onclick="popupCode('SiteMeta.src/M000002.html');return false;">
+          <span class="method-name">head_title</span><span class="method-args">(default_title, separator=&quot; - &quot;)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns string with title tag to use in html head. It uses
+<tt>default_title</tt> unless you provide breadcrumb elements using <tt><a
+href="SiteMeta.html#M000006">set_head_title</a></tt> or <tt><a
+href="SiteMeta.html#M000007">set_head_and_page_title</a></tt>. Elements of
+title (with <tt>default_title</tt> being the last one) are joined using
+<tt>separator</tt>.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
+
+        <div class="method-heading">
+          <a href="SiteMeta.src/M000001.html" target="Code" class="method-signature"
+            onclick="popupCode('SiteMeta.src/M000001.html');return false;">
+          <span class="method-name">meta_content_type</span><span class="method-args">(type=:utf)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns meta tag with appropriate encoding specified. <tt>type</tt> may be
+any string, it&#8216;s inserted verbatim. Popular encodings include
+&quot;utf-8&quot;, &quot;iso-8859-1&quot; and others.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="SiteMeta.src/M000003.html" target="Code" class="method-signature"
+            onclick="popupCode('SiteMeta.src/M000003.html');return false;">
+          <span class="method-name">meta_description</span><span class="method-args">(default_description=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns description meta tag with <tt>default_description</tt> to use in
+html head. You can override it on per-view base using <tt><a
+href="SiteMeta.html#M000009">set_meta_description</a></tt>. Returns nil
+when <tt>default_description</tt> is nil and you did not provide one using
+<tt><a href="SiteMeta.html#M000009">set_meta_description</a></tt>.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="SiteMeta.src/M000004.html" target="Code" class="method-signature"
+            onclick="popupCode('SiteMeta.src/M000004.html');return false;">
+          <span class="method-name">meta_keywords</span><span class="method-args">(default_keywords=[])</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns keywords meta tag with <tt>default_keywords</tt> to use in html
+head. You can override keywords on per-view base using <tt><a
+href="SiteMeta.html#M000010">set_meta_keywords</a></tt>. Optional
+<tt>default_keywords</tt> may be a comma separated string or array of
+strings. Returns nil when <tt>default_keywords</tt> is nil and none
+additional keywords were provided through <tt><a
+href="SiteMeta.html#M000010">set_meta_keywords</a></tt>.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="SiteMeta.src/M000005.html" target="Code" class="method-signature"
+            onclick="popupCode('SiteMeta.src/M000005.html');return false;">
+          <span class="method-name">page_title</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns page title set using <tt><a
+href="SiteMeta.html#M000008">set_page_title</a></tt>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="SiteMeta.src/M000007.html" target="Code" class="method-signature"
+            onclick="popupCode('SiteMeta.src/M000007.html');return false;">
+          <span class="method-name">set_head_and_page_title</span><span class="method-args">(*title)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Sets head title breadcrumbs trail and page title to the leftmost element.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <a href="SiteMeta.src/M000006.html" target="Code" class="method-signature"
+            onclick="popupCode('SiteMeta.src/M000006.html');return false;">
+          <span class="method-name">set_head_title</span><span class="method-args">(*title)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Sets head title breadcrumbs trail
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <a href="SiteMeta.src/M000009.html" target="Code" class="method-signature"
+            onclick="popupCode('SiteMeta.src/M000009.html');return false;">
+          <span class="method-name">set_meta_description</span><span class="method-args">(description)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Sets meta <tt>description</tt> to use with <tt><a
+href="SiteMeta.html#M000003">meta_description</a></tt>.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+          <a href="SiteMeta.src/M000010.html" target="Code" class="method-signature"
+            onclick="popupCode('SiteMeta.src/M000010.html');return false;">
+          <span class="method-name">set_meta_keywords</span><span class="method-args">(keywords, merge_mode=:merge)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Sets <tt>keywords</tt> to use with <tt><a
+href="SiteMeta.html#M000004">meta_keywords</a></tt>. Optional
+<tt>merge_mode</tt> may be set to either :merge (default) or :replace. In
+the second mode provided keywords are not merged with defaults when output
+using <tt><a href="SiteMeta.html#M000004">meta_keywords</a></tt>.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="SiteMeta.src/M000008.html" target="Code" class="method-signature"
+            onclick="popupCode('SiteMeta.src/M000008.html');return false;">
+          <span class="method-name">set_page_title</span><span class="method-args">(title)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Sets page title to use with <tt><a
+href="SiteMeta.html#M000005">page_title</a></tt>
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

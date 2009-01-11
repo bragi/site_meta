@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: site_meta.rb</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>site_meta.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>lib/site_meta.rb
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Thu Jan 08 21:08:34 +0100 2009</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Provides helpers for easily adding metadata to your views and layouts.
+</p>
+<p>
+In your layout use helpers <tt>head_title</tt>, <tt>meta_description</tt>,
+<tt>meta_keywords</tt> with optional defaults. In each view you can
+override the defaults using helpers <tt>set_head_title</tt>,
+<tt>set_meta_description</tt>, <tt>set_meta_keywords</tt>.
+</p>
+<h2>Providing description meta</h2>
+<p>
+In your layout use <tt>meta_description</tt> in head section of HTML with
+optional default description:
+</p>
+<pre>
+  %head
+    = meta_description(&quot;Site_meta is the easiest way to provide metadata in your Rails application&quot;)
+</pre>
+<p>
+In each view you can override default setting using
+<tt>set_meta_description</tt>. In view app/views/pages/show.html.haml
+</p>
+<pre>
+  - set_meta_description(h(@page.description))
+</pre>
+<h2>Providing keywords meta</h2>
+<p>
+In your layout use <tt>meta_keywords</tt> in head section of HTML with
+optional list of default keywords:
+</p>
+<pre>
+  %head
+    = meta_keywords(&quot;rails,gem,plugin,ruby,meta,metadata,html&quot;)
+</pre>
+<p>
+In each view you can override or add keywords using
+<tt>set_meta_keywords</tt>. In view app/views/pages/show.html.haml
+</p>
+<pre>
+  - set_meta_keywords(h(@page.tags.join(&quot;,&quot;)))
+</pre>
+<p>
+which will add keywords to the default set or
+</p>
+<pre>
+  - set_meta_keywords(&quot;pricing,information&quot;, :replace)
+</pre>
+<p>
+to replace the whole list.
+</p>
+<h2>Providing title</h2>
+<p>
+In your layout use <tt>head_title</tt> in head section and provide last
+element of breadcrumb trail (usually site name)
+</p>
+<pre>
+  %head
+    = head_title(&quot;Site_meta&quot;)
+</pre>
+<p>
+In each view you provide title using <tt>set_head_title</tt>, where you can
+provide more elements of breadcrumbs. In view
+app/views/pages/show.html.haml
+</p>
+<pre>
+  - set_head_title(h(@page.title))
+</pre>
+<p>
+or in app/views/pages/edit.html.haml
+</p>
+<pre>
+  - set_head_title(&quot;Editing #{h(@page.title)}&quot;, &quot;Pages&quot;)
+</pre>
+<p>
+This will result in title set to:
+</p>
+<pre>
+  &quot;Page title - Site_meta&quot;
+</pre>
+<p>
+in first case and:
+</p>
+<pre>
+  &quot;Editing Page title - Pages - Site_meta&quot;
+</pre>
+<p>
+in second case
+</p>
+<h2>Providing title in HTML</h2>
+<p>
+Title that is presented in the body part of HTML doesn&#8216;t need the
+breadcrumbs and may differ from the title presented in HTML head part. Use
+<tt>page_title</tt> helper in your layout:
+</p>
+<pre>
+  %body
+    %h1= page_title
+</pre>
+<p>
+In each view set the page title using <tt>set_page_title</tt> helper. In
+view app/views/pages/show.html.haml:
+</p>
+<pre>
+  - set_page_title(h(@page.title))
+</pre>
+<h2>Providing head and page title at the same time</h2>
+<p>
+In most situations (like in case of show.html.haml mentioned above) you
+want to have the same title used as a page title and as a beginning of the
+breadcrumb trail. In that case use <tt>set_head_and_page_title</tt> helper.
+In view app/views/pages/show.html.haml
+</p>
+<pre>
+  - set_head_and_page_title(h(@page.title), &quot;Pages&quot;)
+</pre>
+<p>
+This will set page title to first element and set proper trail in head.
+</p>
+<h2>Providing encoding</h2>
+<p>
+To provide encoding information use <tt>meta_content_type</tt> in your
+layout use
+</p>
+<pre>
+  %head
+    = meta_content_type
+</pre>
+<p>
+This will provide utf-8 charset by default.
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
