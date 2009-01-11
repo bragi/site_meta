@@ -1,17 +1,23 @@
 = site_meta
 
-* site_meta.github.com
+* http://bragi.github.com/site_meta
 
 == DESCRIPTION:
 
 Provides helpers for easy adding of html meta information to Rails applications.
 
-== FEATURES/PROBLEMS:
+== FEATURES:
 
 * Easily add default description and keywords meta tags.
 * Customize meta tags on per-view basis
 * Add head title tag with breadcrubms
 * Add page title
+
+== PROBLEMS:
+
+Use lighthouse to report problems/feature requests:
+
+* http://bragi.lighthouseapp.com/projects/23211-site_meta
 
 == SYNOPSIS:
 
@@ -43,7 +49,7 @@ In your view:
 
 (The MIT License)
 
-Copyright (c) 2009 Łukasz Piestrzeniewicz
+Copyright (c) 2009 Lukasz Piestrzeniewicz
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
