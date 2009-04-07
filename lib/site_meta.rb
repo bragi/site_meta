@@ -38,7 +38,7 @@
 #
 # == Providing title
 #
-# In your layout use +head_title+ in head section and provide last element of 
+# In your layout use +head_title+ in head section and provide last element of
 # breadcrumb trail (usually site name)
 #
 #   %head
@@ -65,14 +65,14 @@
 #
 # == Providing title in HTML
 #
-# Title that is presented in the body part of HTML doesn't need the 
+# Title that is presented in the body part of HTML doesn't need the
 # breadcrumbs and may differ from the title presented in HTML head part.
 # Use +page_title+ helper in your layout:
 #
 #   %body
 #     %h1= page_title
 #
-# In each view set the page title using +set_page_title+ helper. In view 
+# In each view set the page title using +set_page_title+ helper. In view
 # app/views/pages/show.html.haml:
 #
 #   - set_page_title(h(@page.title))
@@ -80,7 +80,7 @@
 # == Providing head and page title at the same time
 #
 # In most situations (like in case of show.html.haml mentioned above) you want
-# to have the same title used as a page title and as a beginning of the 
+# to have the same title used as a page title and as a beginning of the
 # breadcrumb trail. In that case use +set_head_and_page_title+ helper.
 # In view app/views/pages/show.html.haml
 #
@@ -91,7 +91,7 @@
 # == Providing encoding
 #
 # To provide encoding information use +meta_content_type+ in your layout use
-# 
+#
 #   %head
 #     = meta_content_type
 #
@@ -99,26 +99,26 @@
 module SiteMeta
   VERSION = '0.2.0'
 
-  # Returns meta tag with appropriate encoding specified. +type+ may be any 
+  # Returns meta tag with appropriate encoding specified. +type+ may be any
   # string, it's inserted verbatim. Popular encodings include "utf-8",
   # "iso-8859-1" and others.
   def meta_content_type(type=:utf)
     type = "utf-8" if type == :utf
     meta_tag("Content-Type", "text/html; charset=#{type}", "http-equiv")
   end
-  
+
   # Returns string with title tag to use in html head. It uses +default_title+
-  # unless you provide breadcrumb elements using +set_head_title+ or 
-  # +set_head_and_page_title+. Elements of title (with +default_title+ 
+  # unless you provide breadcrumb elements using +set_head_title+ or
+  # +set_head_and_page_title+. Elements of title (with +default_title+
   # being the last one) are joined using +separator+.
   def head_title(default_title, separator=" - ")
     title = [@head_title, default_title].flatten.compact.join(separator)
     title_tag(title)
   end
-  
-  # Returns description meta tag with +default_description+ to use in html 
+
+  # Returns description meta tag with +default_description+ to use in html
   # head. You can override it on per-view base using +set_meta_description+.
-  # Returns nil when +default_description+ is nil and you did not provide one 
+  # Returns nil when +default_description+ is nil and you did not provide one
   # using +set_meta_description+.
   def meta_description(default_description=nil)
     description = @meta_description || default_description
@@ -126,10 +126,10 @@ module SiteMeta
       meta_tag(:description, description)
     end
   end
-  
-  # Returns keywords meta tag with +default_keywords+ to use in html head. 
+
+  # Returns keywords meta tag with +default_keywords+ to use in html head.
   # You can override keywords on per-view base using +set_meta_keywords+.
-  # Optional +default_keywords+ may be a comma separated string or array of 
+  # Optional +default_keywords+ may be a comma separated string or array of
   # strings. Returns nil when +default_keywords+ is nil and none additional
   # keywords were provided through +set_meta_keywords+.
   def meta_keywords(default_keywords=[])
@@ -146,7 +146,7 @@ module SiteMeta
       meta_tag(:keywords, keywords.join(","))
     end
   end
-  
+
   # Returns page title set using +set_page_title+
   def page_title
     @page_title
@@ -156,29 +156,29 @@ module SiteMeta
   def set_head_title(*title)
     @head_title = title.flatten
   end
-  
+
   # Sets head title breadcrumbs trail and page title to the leftmost element.
   def set_head_and_page_title(*title)
     title = [title].flatten.compact
     set_head_title title
     set_page_title title.first
   end
-  
+
   # Sets page title to use with +page_title+
   def set_page_title(title)
     @page_title = title
   end
-  
+
   # Sets meta +description+ to use with +meta_description+.
   def set_meta_description(description)
     @meta_description = description
   end
-  
+
   # Sets +keywords+ to use with +meta_keywords+. Optional +merge_mode+ may be
   # set to either :merge (default) or :replace. In the second mode provided
   # keywords are not merged with defaults when output using +meta_keywords+.
   def set_meta_keywords(keywords, merge_mode=:merge)
-    raise(ArgumentError, "Allowed merge modes are only :replace, :merge") unless [:replace,:merge].include?(merge_mode) 
+    raise(ArgumentError, "Allowed merge modes are only :replace, :merge") unless [:replace,:merge].include?(merge_mode)
     @meta_keywords = keywords
     @meta_keywords_merge_mode = merge_mode
   end
@@ -188,13 +188,17 @@ module SiteMeta
     keywords = keywords.split(",") if keywords.is_a? String
     keywords.flatten.map {|k| k.strip}
   end
-  
+
   def meta_tag(name, content, key='name') #:nodoc:
-    "<meta #{key}=\"#{name}\" content=\"#{content}\" />"
+    if defined?(ActionView::Base)
+      tag 'meta', key => name, :content => content
+    else
+      "<meta #{key}=\"#{name}\" content=\"#{content}\" />"
+    end
   end
-  
+
   def title_tag(content) #:nodoc:
     "<title>#{content}</title>"
   end
-  
+
 end
