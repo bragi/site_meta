@@ -104,7 +104,7 @@ module SiteMeta
   # "iso-8859-1" and others.
   def meta_content_type(type=:utf)
     type = "utf-8" if type == :utf
-    meta_tag("Content-Type", "text/html;charset=#{type}", "http-equiv")
+    meta_tag("Content-Type", "text/html; charset=#{type}", "http-equiv")
   end
   
   # Returns string with title tag to use in html head. It uses +default_title+
