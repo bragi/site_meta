@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ["History.txt", "README.rdoc"]
   s.files = ["History.txt", "init.rb", "lib/site_meta.rb", "rails/init.rb", "README.rdoc"]
   s.has_rdoc = true
-  s.homepage = %q{site_meta.github.com}
+  s.homepage = %q{http://github.com/bragi/site_meta}
   s.rdoc_options = ["--main", "README.rdoc"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{site_meta}
