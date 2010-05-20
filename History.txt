@@ -1,5 +1,7 @@
-== 0.2
+== 0.3.0
+ * Uses tag and content_tag when available (in Rails for example)
+== 0.2.0
  * Added documentation
  * meta_keywords now allows multiple arguments, strips spaces
-== 0.1
+== 0.1.0
 First public release of helpers
