@@ -17,11 +17,14 @@ Gem::Specification.new do |s|
  * Add page title}
   s.email = %q{bragi@ragnarson.com}
   s.extra_rdoc_files = [
-    "README.rdoc"
+    "LICENSE",
+     "README.rdoc"
   ]
   s.files = [
-    ".gitignore",
+    ".document",
+     ".gitignore",
      "History.txt",
+     "LICENSE",
      "Manifest.txt",
      "README.rdoc",
      "Rakefile",
