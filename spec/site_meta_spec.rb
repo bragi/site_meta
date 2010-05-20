@@ -23,6 +23,20 @@ describe SiteMeta do
     @helper.title_tag("Content").should == "<title>Content</title>"
   end
   
+  describe "when used in ActionPack context" do
+    it "should use tag for meta" do
+      @helper.should_receive(:respond_to?).with(:tag).and_return(true)
+      @helper.should_receive("tag").with("meta", {"name" => :description, :content => "Default"})
+      @helper.meta_tag(:description, "Default")
+    end
+    
+    it "should use content_tag for title" do
+      @helper.should_receive(:respond_to?).with(:content_tag).and_return(true)
+      @helper.should_receive("content_tag").with("title", "Content")
+      @helper.title_tag("Content")
+    end
+  end
+  
   describe "when providing description" do
     it "should accept empty default description" do
       @helper.meta_description

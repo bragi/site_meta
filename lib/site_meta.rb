@@ -190,7 +190,7 @@ module SiteMeta
   end
 
   def meta_tag(name, content, key='name') #:nodoc:
-    if defined?(ActionView::Base)
+    if respond_to?(:tag)
       tag 'meta', key => name, :content => content
     else
       "<meta #{key}=\"#{name}\" content=\"#{content}\" />"
@@ -198,7 +198,11 @@ module SiteMeta
   end
 
   def title_tag(content) #:nodoc:
-    "<title>#{content}</title>"
+    if respond_to?(:content_tag)
+      content_tag "title", content
+    else
+      "<title>#{content}</title>"
+    end
   end
 
 end
