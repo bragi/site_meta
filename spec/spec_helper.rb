@@ -7,4 +7,5 @@ rescue LoadError
 end
 
 $:.unshift(File.dirname(__FILE__) + '/../lib')
+require 'action_controller'
 require 'site_meta'

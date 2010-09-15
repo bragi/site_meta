@@ -1,3 +1,5 @@
+== 1.0.0
+ * Rails 3 only
 == 0.3.0
  * Uses tag and content_tag when available (in Rails for example)
 == 0.2.0

@@ -1,6 +1,6 @@
 = site_meta
 
-* http://bragi.github.com/site_meta
+* http://github.com/bragi/site_meta
 
 == DESCRIPTION:
 
@@ -12,6 +12,7 @@ Provides helpers for easy adding of html meta information to Rails applications.
 * Customize meta tags on per-view basis
 * Add head title tag with breadcrubms
 * Add page title
+* Add encoding meta tag
 
 == PROBLEMS:
 
@@ -24,6 +25,7 @@ Use lighthouse to report problems/feature requests:
 In your layout (haml assumed):
 
   %head
+    = meta_content_type
     = meta_description("Default meta description")
     = meta_keywords("some, default, keywords")
     = head_title("Site name")
@@ -34,22 +36,39 @@ In your view:
 
   - set_meta_description(h(@item.description))
   - set_meta_keywords(h(@item.tags.join(",")))
-  - set_head_title([h(@item.title), "Showing item"])
+  - set_head_title(h(@item.title), "Showing item")
   - set_page_title(h(@item.title))
+  - set_head_and_page_title((h(@item.title), "Showing item")
 
-== INSTALL:
+== USING:
 
-* sudo gem install bragi-site_meta
+Add following line to your Gemfile
+    gem "site_meta", "1.0.0"
+
+For Rails 2.3.x you can use version 0.3.0:
+
+* <code>gem install site_meta -v "0.3.0"</code>
 * Add following line to your config/environment.rb
     Rails::Initializer.run do |config| 
-      config.gem 'bragi-site_meta'
+      config.gem 'site_meta', :version => "0.3.0"
     end
+
+== CONTRIBUTING:
+
+* Fork it.
+* Create a branch (git checkout -b my_new_feature)
+* Install dependencies: <code>$ bundle install</code>
+* Run specs to make sure you start clean : <code>$ bundle exec rake spec</code>
+* Add your feature with specs
+* Commit your changes (git commit -am "Added Snarkdown")
+* Push to the branch (git push origin my_markup)
+* Send pull request
 
 == LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2009 Łukasz Piestrzeniewicz
+Copyright (c) 2009, 2010 Łukasz Piestrzeniewicz
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

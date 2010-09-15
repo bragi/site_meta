@@ -1,3 +1,1 @@
-ActionView::Base.class_eval do
-  include SiteMeta
-end
+require 'site_meta'
