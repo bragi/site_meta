@@ -23,6 +23,8 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
      ".gitignore",
+     "Gemfile",
+     "Gemfile.lock",
      "History.txt",
      "LICENSE",
      "Manifest.txt",
@@ -30,6 +32,7 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "init.rb",
+     "lib/app/helpers/site_meta_helper.rb",
      "lib/site_meta.rb",
      "rails/init.rb",
      "script/console",
